@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 
 var ffmpeg = require("fluent-ffmpeg"),
-    fs = require("fs-extra")
+    fs = require("fs-extra"),
+    path = require("path")
 ;
 
 // var tsRoot = "/mnt/pub/movie/tv/raw/";
@@ -35,11 +36,17 @@ onError = function(err) {
 };
 
 
+fs.ensureDirSync(mp4Dir);
 fs.readdir(tsDir, function(err, files) {
+    var tsPath, mp4Path;
+
     if(err) throw err;
+
     files.filter(function(file) {
-        if(fs.statSync(tsDir + file).isFile()) {
-            console.log(tsDir + file);
+        tsPath = tsDir + file;
+        mp4Path = mp4Dir + path.basename(file, '.ts') + '.mp4';
+        if(fs.statSync(tsPath).isFile()) {
+            encode(tsPath, mp4Path);
         }
     })
 })
