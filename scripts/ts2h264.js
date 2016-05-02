@@ -8,18 +8,12 @@ var ffmpeg = require("fluent-ffmpeg"),
 // var tsRoot = "/mnt/pub/movie/tv/raw/";
 var configMap = {
         pathList:[
-            ['/mnt/pub/movie/tv/raw/ひつじのショーン',
-            '/mnt/pub/movie/tv/enc/ひつじのショーン'],
+            ['/mnt/pub/movie/tv/raw/ひつじのショーン/',
+            '/mnt/pub/movie/tv/encoded/ひつじのショーン/'],
         ]
         
     },
     encode, onSuccess, onError
-;
-
-
-
-var tsDir = process.argv[2],
-    mp4Dir = process.argv[3]
 ;
 
 
@@ -47,8 +41,8 @@ onError = function(err) {
 
 
 configMap.pathList.forEach(function(pathArray) {
-    tsDir = pathArray[0];
-    mp4Dir = pathArray[1];
+    var tsDir = pathArray[0],
+        mp4Dir = pathArray[1];
     fs.ensureDirSync(mp4Dir);
     fs.readdir(tsDir, function(err, files) {
         var tsPath, mp4Path;
