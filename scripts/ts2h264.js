@@ -46,9 +46,9 @@ onError = function(err) {
 };
 
 
-configMap.pathList.forEach(function(path) {
-    tsDir = path[0];
-    mp4Dir = path[1];
+configMap.pathList.forEach(function(pathArray) {
+    tsDir = pathArray[0];
+    mp4Dir = pathArray[1];
     fs.ensureDirSync(mp4Dir);
     fs.readdir(tsDir, function(err, files) {
         var tsPath, mp4Path;
