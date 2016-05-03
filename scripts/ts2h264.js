@@ -20,6 +20,7 @@ var configMap = {
 
 
 encode = function(srcPath, dstPath) {
+    console.log(srcPath + ' to ' + dstPath);
     ffmpeg()
       .input(srcPath)
       .audioCodec('libmp3lame')
