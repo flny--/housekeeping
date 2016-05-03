@@ -44,7 +44,7 @@ configMap.pathList.forEach(function(pathArray) {
     var tsDir = pathArray[0],
         mp4Dir = pathArray[1];
     fs.ensureDirSync(mp4Dir);
-    fs.readdir(tsDir, function(err, files) {
+    fs.readdirSync(tsDir, function(err, files) {
         var tsPath, mp4Path;
     
         if(err) throw err;
