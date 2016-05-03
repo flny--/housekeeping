@@ -29,6 +29,7 @@ encode = function(srcPath, dstPath) {
       .addOptions(['-crf 20'])
       .on('end', onSuccess)
       .on('error', onError)
+      .outputOptions('-y')
       .saveToFile(dstPath);
 };
 
