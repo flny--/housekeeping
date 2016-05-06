@@ -8,8 +8,8 @@ var ffmpeg = require("fluent-ffmpeg"),
 // var tsRoot = "/mnt/pub/movie/tv/raw/";
 var configMap = {
         pathList:[
-            ['/mnt/pub/movie/tv/raw/ひつじのショーン/',
-            '/mnt/pub/movie/tv/encoded/ひつじのショーン/'],
+            {src: '/mnt/pub/movie/tv/raw/ひつじのショーン/',
+             dst: '/mnt/pub/movie/tv/encoded/ひつじのショーン/'},
         ]
         
     },
@@ -29,7 +29,7 @@ encode = function(srcPath, dstPath) {
       .addOptions(['-crf 20'])
       .on('end', onSuccess)
       .on('error', onError)
-      .outputOptions('-y')
+      .outputOptions(['-y'])
       .saveToFile(dstPath);
 };
 
@@ -43,19 +43,26 @@ onError = function(err) {
 
 
 configMap.pathList.forEach(function(pathArray) {
-    var tsDir = pathArray[0],
-        mp4Dir = pathArray[1];
+    var tsDir = pathArray.src,
+        mp4Dir = pathArray.dst,
+        tsDirStat = fs.statSync(tsDir)
+    ;
     fs.ensureDirSync(mp4Dir);
+    fs.chownSync(mp4Dir, tsDirStat.uid, tsDirStat.gid);
+    
     fs.readdirSync(tsDir, function(err, files) {
-        var tsPath, mp4Path;
+        var tsPath, mp4Path, fileStat;
     
         if(err) throw err;
     
         files.filter(function(file) {
             tsPath = tsDir + file;
             mp4Path = mp4Dir + path.basename(file, '.ts') + '.mp4';
-            if(fs.statSync(tsPath).isFile()) {
+            fileStat = fs.statSync(tsPath);
+            if(fileStat.isFile()) {
                 encode(tsPath, mp4Path);
+                
+                fs.chownSync(mp4Path, fileStat.uid, fileStat.gid);
             }
         })
     })
