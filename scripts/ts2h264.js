@@ -64,7 +64,9 @@ configMap.pathList.forEach(function(pathArray) {
     
         if(err) throw err;
     
+        console.log(files + ' reading...');
         files.filter(function(file) {
+            console.log(file + ' reading...');
             tsPath = tsDir + file;
             mp4Path = mp4Dir + path.basename(file, '.ts') + '.mp4';
             fileStat = fs.statSync(tsPath);
