@@ -13,7 +13,7 @@ var configMap = {
         ]
         
     },
-    encode, onSuccess, onError
+    encode, onSuccess, onError, onStderr
 ;
 
 
@@ -29,8 +29,10 @@ encode = function(srcPath, dstPath) {
       .addOptions(['-crf 20'])
       .on('end', onSuccess)
       .on('error', onError)
+      .on('stderr', onStderr)
       .outputOptions(['-y'])
-      .saveToFile(dstPath);
+      .saveToFile(dstPath)
+      .run();
 };
 
 onSuccess = function(stdout, stderr) {
@@ -41,6 +43,9 @@ onError = function(err) {
     console.log(err.message);
 };
 
+onStderr = function(stderrLine) {
+    console.log(stderrLine);
+};
 
 configMap.pathList.forEach(function(pathArray) {
     var tsDir = pathArray.src,
@@ -48,7 +53,10 @@ configMap.pathList.forEach(function(pathArray) {
         tsDirStat = fs.statSync(tsDir)
     ;
     fs.ensureDirSync(mp4Dir);
+    console.log(mp4Dir + ' created.');
+    
     fs.chownSync(mp4Dir, tsDirStat.uid, tsDirStat.gid);
+    console.log(mp4Dir + ' owner changed.');
     
     fs.readdirSync(tsDir, function(err, files) {
         var tsPath, mp4Path, fileStat;
