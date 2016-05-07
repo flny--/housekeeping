@@ -9,7 +9,7 @@ var ffmpeg = require("fluent-ffmpeg"),
 var configMap = {
         pathList:[
             {src: '/mnt/pub/movie/tv/raw/ひつじのショーン/',
-             dst: '/mnt/pub/movie/tv/encoded/ひつじのショーン/'},
+             dst: '/mnt/pub/movie/tv/enc/ひつじのショーン/'},
         ]
         
     },
@@ -58,6 +58,7 @@ configMap.pathList.forEach(function(pathArray) {
     fs.chownSync(mp4Dir, tsDirStat.uid, tsDirStat.gid);
     console.log(mp4Dir + ' owner changed.');
     
+    console.log(tsDir + ' reading...');
     fs.readdirSync(tsDir, function(err, files) {
         var tsPath, mp4Path, fileStat;
     
