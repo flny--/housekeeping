@@ -59,23 +59,21 @@ configMap.pathList.forEach(function(pathArray) {
     console.log(mp4Dir + ' owner changed.');
     
     console.log(tsDir + ' reading...');
-    fs.readdirSync(tsDir, function(err, files) {
-        var tsPath, mp4Path, fileStat;
-    
-        if(err) throw err;
-    
-        console.log(files + ' reading...');
-        files.filter(function(file) {
-            console.log(file + ' reading...');
-            tsPath = tsDir + file;
-            mp4Path = mp4Dir + path.basename(file, '.ts') + '.mp4';
-            fileStat = fs.statSync(tsPath);
-            if(fileStat.isFile()) {
-                encode(tsPath, mp4Path);
-                
-                fs.chownSync(mp4Path, fileStat.uid, fileStat.gid);
-            }
-        })
+    var files = fs.readdirSync(tsDir);
+    var tsPath, mp4Path, fileStat;
+
+    console.log(files + ' reading...');
+
+    files.filter(function(file) {
+        console.log(file + ' reading...');
+        tsPath = tsDir + file;
+        mp4Path = mp4Dir + path.basename(file, '.ts') + '.mp4';
+        fileStat = fs.statSync(tsPath);
+        if(fileStat.isFile()) {
+            encode(tsPath, mp4Path);
+            
+            fs.chownSync(mp4Path, fileStat.uid, fileStat.gid);
+        }
     })
 })
 
