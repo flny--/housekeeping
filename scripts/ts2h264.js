@@ -72,7 +72,7 @@ configMap.pathList.forEach(function(pathArray) {
         if(fileStat.isFile()) {
             encode(tsPath, mp4Path);
             
-            fs.chownSync(mp4Path, fileStat.uid, fileStat.gid);
+//            fs.chownSync(mp4Path, fileStat.uid, fileStat.gid);
         }
     })
 })
