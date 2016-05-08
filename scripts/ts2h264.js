@@ -57,7 +57,6 @@ onError = function(err) {
 };
 
 onStderr = function(stderrLine) {
-    console.log(stderrLine);
 };
 
 configMap.pathList.forEach(function(pathArray) {
