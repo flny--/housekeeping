@@ -50,10 +50,10 @@ onSuccess = function(stdout, stderr) {
 onError = function(err) {
     console.log(err.message);
     console.log(encNow.dst + ' failed.');
-    encNow = encList.shift();
+/*    encNow = encList.shift();
     if(encNow) {
         encode(encNow.src, encNow.dst);
-    }
+    }*/
 };
 
 onStderr = function(stderrLine) {
@@ -85,6 +85,6 @@ configMap.pathList.forEach(function(pathArray) {
         }
     })
     console.log(encList);
-    onSuccess(null, null);
+    onSuccess(undefined, undefined);
 })
 
