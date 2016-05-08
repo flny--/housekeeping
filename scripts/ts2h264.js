@@ -39,6 +39,7 @@ encode = function(srcPath, dstPath) {
 onSuccess = function(stdout, stderr) {
     if(encNow) {
         console.log(encNow.dst + ' encoded.');
+        fs.chownSync(encNow.dst, configMap.uid, configMap.gid);
     }
     encNow = encList.shift();
     if(encNow) {
@@ -72,17 +73,14 @@ configMap.pathList.forEach(function(pathArray) {
     var files = fs.readdirSync(tsDir);
     var tsPath, mp4Path, fileStat;
 
-//    console.log(files + ' reading...');
 
     files.filter(function(file) {
-//        console.log(file + ' reading...');
         tsPath = tsDir + file;
         mp4Path = mp4Dir + path.basename(file, '.ts') + '.mp4';
         fileStat = fs.statSync(tsPath);
         if(fileStat.isFile()) {
             encList.push({src:tsPath, dst:mp4Path});
-//            encode(tsPath, mp4Path);
-            
+
 //            fs.chownSync(mp4Path, fileStat.uid, fileStat.gid);
         }
     })
