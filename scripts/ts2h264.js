@@ -10,9 +10,11 @@ var configMap = {
         pathList:[
             {src: '/mnt/pub/movie/tv/raw/ひつじのショーン/',
              dst: '/mnt/pub/movie/tv/enc/ひつじのショーン/'},
-        ]
-        
+        ],
+        uid: 1000,
+        gid: 1000,
     },
+    srcList = [],
     encode, onSuccess, onError, onStderr
 ;
 
@@ -49,31 +51,31 @@ onStderr = function(stderrLine) {
 
 configMap.pathList.forEach(function(pathArray) {
     var tsDir = pathArray.src,
-        mp4Dir = pathArray.dst,
-        tsDirStat = fs.statSync(tsDir)
+        mp4Dir = pathArray.dst
     ;
     fs.ensureDirSync(mp4Dir);
-    console.log(mp4Dir + ' created.');
-    
-    fs.chownSync(mp4Dir, tsDirStat.uid, tsDirStat.gid);
+
+    fs.chownSync(mp4Dir, configMap.uid, configMap.gid);
     console.log(mp4Dir + ' owner changed.');
     
     console.log(tsDir + ' reading...');
     var files = fs.readdirSync(tsDir);
     var tsPath, mp4Path, fileStat;
 
-    console.log(files + ' reading...');
+//    console.log(files + ' reading...');
 
     files.filter(function(file) {
-        console.log(file + ' reading...');
+//        console.log(file + ' reading...');
         tsPath = tsDir + file;
         mp4Path = mp4Dir + path.basename(file, '.ts') + '.mp4';
         fileStat = fs.statSync(tsPath);
         if(fileStat.isFile()) {
-            encode(tsPath, mp4Path);
+            srcList.push({src:tsPath, dst:mp4Path});
+//            encode(tsPath, mp4Path);
             
 //            fs.chownSync(mp4Path, fileStat.uid, fileStat.gid);
         }
     })
+    console.log(srcList);
 })
 
