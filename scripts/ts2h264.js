@@ -14,11 +14,10 @@ var configMap = {
         uid: 1000,
         gid: 1000,
     },
-    srcList = [],
+    encList = [],
+    encNow,
     encode, onSuccess, onError, onStderr
 ;
-
-
 
 
 encode = function(srcPath, dstPath) {
@@ -38,11 +37,22 @@ encode = function(srcPath, dstPath) {
 };
 
 onSuccess = function(stdout, stderr) {
-    console.log(stdout);
+    if(encNow) {
+        console.log(encNow.dst + ' encoded.');
+    }
+    encNow = encList.shift();
+    if(encNow) {
+        encode(encNow.src, encNow.dst);
+    }
 };
 
 onError = function(err) {
     console.log(err.message);
+    console.log(encNow.dst + ' failed.');
+    encNow = encList.shift();
+    if(encNow) {
+        encode(encNow.src, encNow.dst);
+    }
 };
 
 onStderr = function(stderrLine) {
@@ -70,12 +80,13 @@ configMap.pathList.forEach(function(pathArray) {
         mp4Path = mp4Dir + path.basename(file, '.ts') + '.mp4';
         fileStat = fs.statSync(tsPath);
         if(fileStat.isFile()) {
-            srcList.push({src:tsPath, dst:mp4Path});
+            encList.push({src:tsPath, dst:mp4Path});
 //            encode(tsPath, mp4Path);
             
 //            fs.chownSync(mp4Path, fileStat.uid, fileStat.gid);
         }
     })
-    console.log(srcList);
+    console.log(encList);
+    onSuccess(null, null);
 })
 
