@@ -16,7 +16,7 @@ var configMap = {
     },
     encList = [],
     encNow,
-    encode, onSuccess, onError, onStderr
+    encode, onSuccess, onError
 ;
 
 
@@ -30,10 +30,8 @@ encode = function(srcPath, dstPath) {
       .addOptions(['-crf 20'])
       .on('end', onSuccess)
       .on('error', onError)
-      .on('stderr', onStderr)
       .outputOptions(['-y'])
-      .saveToFile(dstPath)
-      .run();
+      .saveToFile(dstPath);
 };
 
 onSuccess = function(stdout, stderr) {
@@ -56,15 +54,13 @@ onError = function(err) {
     }*/
 };
 
-onStderr = function(stderrLine) {
-};
 
 configMap.pathList.forEach(function(pathArray) {
     var tsDir = pathArray.src,
         mp4Dir = pathArray.dst
     ;
-    fs.ensureDirSync(mp4Dir);
 
+    fs.ensureDirSync(mp4Dir);
     fs.chownSync(mp4Dir, configMap.uid, configMap.gid);
     console.log(mp4Dir + ' owner changed.');
     
