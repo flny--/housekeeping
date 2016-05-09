@@ -10,13 +10,15 @@ var configMap = {
         pathList:[
             {src: '/mnt/pub/movie/tv/raw/ひつじのショーン/',
              dst: '/mnt/pub/movie/tv/enc/ひつじのショーン/'},
+            {src: '/mnt/pub/movie/tv/raw/ちいさなプリンセスソフィア/',
+             dst: '/mnt/pub/movie/tv/enc/ちいさなプリンセスソフィア/'},
         ],
         uid: 1000,
         gid: 1000,
     },
     encList = [],
     encNow,
-    encode, onSuccess, onError
+    encode, onSuccess, onError, doNext
 ;
 
 
@@ -35,6 +37,15 @@ encode = function(srcPath, dstPath) {
 };
 
 onSuccess = function(stdout, stderr) {
+    doNext();
+};
+
+onError = function(err) {
+    console.log(err.message);
+    console.log(encNow.dst + ' failed.');
+};
+
+doNext = function() {
     if(encNow) {
         console.log(encNow.dst + ' encoded.');
         fs.chownSync(encNow.dst, configMap.uid, configMap.gid);
@@ -43,16 +54,7 @@ onSuccess = function(stdout, stderr) {
     if(encNow) {
         encode(encNow.src, encNow.dst);
     }
-};
-
-onError = function(err) {
-    console.log(err.message);
-    console.log(encNow.dst + ' failed.');
-/*    encNow = encList.shift();
-    if(encNow) {
-        encode(encNow.src, encNow.dst);
-    }*/
-};
+}
 
 
 configMap.pathList.forEach(function(pathArray) {
@@ -62,12 +64,10 @@ configMap.pathList.forEach(function(pathArray) {
 
     fs.ensureDirSync(mp4Dir);
     fs.chownSync(mp4Dir, configMap.uid, configMap.gid);
-    console.log(mp4Dir + ' owner changed.');
-    
+
     console.log(tsDir + ' reading...');
     var files = fs.readdirSync(tsDir);
     var tsPath, mp4Path, fileStat;
-
 
     files.filter(function(file) {
         tsPath = tsDir + file;
@@ -75,11 +75,8 @@ configMap.pathList.forEach(function(pathArray) {
         fileStat = fs.statSync(tsPath);
         if(fileStat.isFile()) {
             encList.push({src:tsPath, dst:mp4Path});
-
-//            fs.chownSync(mp4Path, fileStat.uid, fileStat.gid);
         }
     })
-    console.log(encList);
-    onSuccess(undefined, undefined);
 })
+doNext();
 
