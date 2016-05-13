@@ -13,6 +13,7 @@ var configMap = {
             {src: '/mnt/pub/movie/tv/raw/ちいさなプリンセスソフィア/',
              dst: '/mnt/pub/movie/tv/enc/ちいさなプリンセスソフィア/'},
         ],
+        pathDone: "/mnt/pub/movie/tv/raw/done/",
         uid: 1000,
         gid: 1000,
     },
@@ -49,6 +50,7 @@ doNext = function() {
     if(encNow) {
         console.log(encNow.dst + ' encoded.');
         fs.chownSync(encNow.dst, configMap.uid, configMap.gid);
+        fs.renameSync(encNow.src, configMap.pathDone + path.basename(encNow.src));
     }
     encNow = encList.shift();
     if(encNow) {
