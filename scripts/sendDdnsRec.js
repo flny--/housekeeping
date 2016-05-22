@@ -36,6 +36,7 @@ sendRecord = function(ip) {
         ttl    : 3600,
         values : [ip]
     };
+    console.log(aRec);
     r53.setRecord(aRec, function(err, res) {
         if(err) throw err;
         console.log(res);
