@@ -28,6 +28,10 @@ sendRecord = function(ip) {
         ttl    : 3600,
         values : [ip]
     };
+    r53.zones(function(err, domains) {
+        if(err) throw err;
+        console.log(domains);
+    });
     r53.setRecord(aRec, function(err, res) {
         if(err) throw err;
         console.log(res);
