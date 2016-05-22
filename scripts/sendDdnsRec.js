@@ -21,20 +21,21 @@ var configMap = {
 
 sendRecord = function(ip) {
     console.log(r53);
-    var aRec = {
-        zoneId : configMap.zoneId,
-        name   : 'flny.ch.',
-        type   : 'A',
-        ttl    : 3600,
-        values : [ip]
-    };
-    r53.zones(function(err, domains) {
+/*    r53.zones(function(err, domains) {
         if(err) {
             console.log(err);
             throw err;
         }
         console.log(domains);
-    });
+    });*/
+
+    var aRec = {
+        zoneId : configMap.zoneId,
+        name   : 'achn.flny.ch.',
+        type   : 'A',
+        ttl    : 3600,
+        values : [ip]
+    };
     r53.setRecord(aRec, function(err, res) {
         if(err) throw err;
         console.log(res);
