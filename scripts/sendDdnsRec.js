@@ -13,7 +13,7 @@ var configMap = {
     r53 = new Route53(
         {accessKeyId :     configMap.iam_key,
          secretAccessKey : configMap.iam_sec,
-         region : 'ap-northeast-1'
+         region : 'us-west-2'
         }
         ),
     onReceiveIp, sendRecord
