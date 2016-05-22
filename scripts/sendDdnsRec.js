@@ -16,16 +16,16 @@ var configMap = {
 
 
 sendRecord = function(ip) {
-    r53.records(configMap.zoneId, function(err, records) {
-        console.log(records);
+    r53.records(configMap.zoneId, function(err, recs) {
+        console.log(recs);
         if(err) throw err;
         
-        var aRec = records.filter(function(record, index, array){
+        var aRec = recs.filter(function(record, index, array){
             console.log(record);
             return (record.name == 'flny.ch.' && record.type == 'A');
         })[0];
-    })
-}
+    });
+};
 
 
 onReceiveIp = function(err, ip) {
