@@ -29,7 +29,10 @@ sendRecord = function(ip) {
         values : [ip]
     };
     r53.zones(function(err, domains) {
-        if(err) throw err;
+        if(err) {
+            console.log(err);
+            throw err;
+        }
         console.log(domains);
     });
     r53.setRecord(aRec, function(err, res) {
