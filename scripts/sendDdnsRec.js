@@ -12,7 +12,9 @@ var configMap = {
     getIP = new ExtIP(),
     r53 = new Route53(
         {accessKeyId :     configMap.iam_key,
-         secretAccessKey : configMap.iam_sec}
+         secretAccessKey : configMap.iam_sec,
+         region : 'ap-northeast-1'
+        }
         ),
     onReceiveIp, sendRecord
 ;
