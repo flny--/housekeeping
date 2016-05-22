@@ -10,7 +10,10 @@ var configMap = {
         iam_sec : process.env.IAM_DDNS_SECRET,
     },
     getIP = new ExtIP(),
-    r53 = new Route53(configMap.iam_key, configMap.iam_sec),
+    r53 = new Route53(
+        [accessKeyId:     configMap.iam_key,
+         secretAccessKey: configMap.iam_sec]
+        ),
     onReceiveIp, sendRecord
 ;
 
