@@ -19,6 +19,7 @@ var configMap = {
 
 
 sendRecord = function(ip) {
+    console.log(r53);
     r53.records(configMap.zoneId, function(err, recs) {
         console.log(recs);
         if(err) throw err;
