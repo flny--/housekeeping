@@ -13,8 +13,7 @@ var configMap = {
     r53 = new Route53(
         {accessKeyId :     configMap.iam_key,
          secretAccessKey : configMap.iam_sec,
-         region : 'us-west-2'
-        }
+         region : 'us-west-2'}
         ),
     onReceiveIp, sendRecord
 ;
@@ -22,6 +21,20 @@ var configMap = {
 
 sendRecord = function(ip) {
     console.log(r53);
+    var aRec = {
+        zoneId : configMap.zoneId,
+        name   : 'flny.ch.',
+        type   : 'A',
+        ttl    : 3600,
+        values : [ip]
+    };
+    r53.setRecord(aRec, function(err, res) {
+        if(err) throw err;
+        console.log(res);
+    });
+    
+
+/*    
     r53.records(configMap.zoneId, function(err, recs) {
         console.log(recs);
         if(err) throw err;
@@ -30,7 +43,7 @@ sendRecord = function(ip) {
             console.log(record);
             return (record.name == 'flny.ch.' && record.type == 'A');
         })[0];
-    });
+    });*/
 };
 
 
