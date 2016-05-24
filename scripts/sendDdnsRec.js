@@ -39,7 +39,6 @@ onReceiveIp = function(err, ip) {
     if(err) {
         throw err;
     }
-    console.log(ip);
     sendRecord(ip)
 }
 
