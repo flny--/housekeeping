@@ -12,23 +12,13 @@ var configMap = {
     getIP = new ExtIP(),
     r53 = new Route53(
         {accessKeyId :     configMap.iam_key,
-         secretAccessKey : configMap.iam_sec,
-         region : 'us-west-2'}
+         secretAccessKey : configMap.iam_sec}
         ),
     onReceiveIp, sendRecord
 ;
 
 
 sendRecord = function(ip) {
-    console.log(r53);
-/*    r53.zones(function(err, domains) {
-        if(err) {
-            console.log(err);
-            throw err;
-        }
-        console.log(domains);
-    });*/
-
     var aRec = {
         zoneId : configMap.zoneId,
         name   : 'achn.flny.ch.',
@@ -42,17 +32,6 @@ sendRecord = function(ip) {
         console.log(res);
     });
     
-
-/*    
-    r53.records(configMap.zoneId, function(err, recs) {
-        console.log(recs);
-        if(err) throw err;
-        
-        var aRec = recs.filter(function(record, index, array){
-            console.log(record);
-            return (record.name == 'flny.ch.' && record.type == 'A');
-        })[0];
-    });*/
 };
 
 
