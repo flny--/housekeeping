@@ -6,7 +6,7 @@ var scanner = require('node-netcat').portscan(),
 
 
 var configMap = {
-  host  :'pfm.flny.space',
+  host  :'pfm.flny.ch',
   ports : ['43021', '53', '445', '8200', '8201'],
   udpErrorStr : 'protocol \"udp\" with message',
   msgPath : '/mnt/pub/misc/monitor/'
