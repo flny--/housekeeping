@@ -31,6 +31,7 @@ scanPorts = function() {
 
 errMessages = scanPorts();
 if(errMessages == '') {
+  console.log(errMessages);
   logger.log(logger.categorySystemError, errMessages);
 }
 
