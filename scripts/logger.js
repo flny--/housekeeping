@@ -30,12 +30,18 @@ module.exports = {
 
 getCategoryObj = function(category) {
     var result = undefined;
-    categoryMap.forEach(function(aCategory) {
+    Object.keys(categoryMap).forEach(function(key) {
+        var aCategory = this[key];
+        if(category == aCategory.value) {
+            result = aCategory;
+        }
+    }, categoryMap);
+/*    categoryMap.forEach(function(aCategory) {
         if(category == aCategory.value) {
             result = aCategory;
             return;
         }
-    });
+    });*/
     return result;
 }
 
