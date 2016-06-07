@@ -11,23 +11,21 @@ categoryMap = {
     systemInfo : {value:101, prefix: "system_info_",  icon: ""},
     appInfo    : {value:201, prefix: "app_info_",     icon: ""}
 },
-log, getFileName, getCategoryObj
+getFileName, getCategoryObj
 ;
 
 
 module.exports = {
-    log: log,
+    log: function(category, msg) {
+        var filePath = getFileName(category);
+        fs.appendFile(filePath, msg);
+    },
     
     categorySystemError: categoryMap.systemError.value,
     categorySystemInfo : categoryMap.systemInfo.value,
     categoryappInfo    : categoryMap.appInfo.value,
 }
 
-
-log = function(category, msg) {
-    var filePath = getFileName(category);
-    fs.appendFile(filePath, msg);
-};
 
 
 getCategoryObj = function(category) {
