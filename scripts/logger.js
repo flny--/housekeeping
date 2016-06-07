@@ -36,12 +36,6 @@ getCategoryObj = function(category) {
             result = aCategory;
         }
     }, categoryMap);
-/*    categoryMap.forEach(function(aCategory) {
-        if(category == aCategory.value) {
-            result = aCategory;
-            return;
-        }
-    });*/
     return result;
 }
 

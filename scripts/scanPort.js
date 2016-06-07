@@ -33,5 +33,7 @@ errMessages = scanPorts();
 if(errMessages == '') {
   console.log(errMessages);
   logger.log(logger.categorySystemError, errMessages);
+}else{
+  console.log(configMap.ports + ' are checked.');
 }
 
