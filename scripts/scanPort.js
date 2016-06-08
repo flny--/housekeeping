@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 
 var scanner = require('node-netcat').portscan(),
-    logger = require('./logger')
+    logger = require('./logger'),
+    async  = require('async')
 ;
 
 
@@ -12,23 +13,32 @@ var configMap = {
   msgPath : '/mnt/pub/misc/monitor/'
 },
 errMessages,
-scanPorts
+scanPorts,
+scanAPort
 ;
 
 
+scanAPort = function(port) {
+  scanner.run(configMap.host, port, function(err, res) {
+    if(err && err.indexOf(configMap.udpErrorStr) == -1) {
+      return err + '\n';
+    }else{
+      return '';
+    }
+  });
+}
+
 scanPorts = function() {
   console.log(configMap.ports + ' checking...');
-
   var messages = '';
-  configMap.ports.forEach(function(port) {
-    scanner.run(configMap.host, port, function(err, res) {
-      if(err && err.indexOf(configMap.udpErrorStr) == -1) {
-//        console.log(err);
-        messages = messages + err + '\n';
-      }
-    });
-  });
+
+  for(var i=0; i<configMap.ports.length; i++)  {
+    messages += scanAPort(configMap.ports[i]);
+  }
+
+  console.log(messages);
   return messages;
+  
 }
 
 
