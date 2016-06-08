@@ -24,7 +24,7 @@ scanPorts = function() {
     scanner.run(configMap.host, port, function(err, res) {
       if(err && err.indexOf(configMap.udpErrorStr) == -1) {
 //        console.log(err);
-        messages += err + '\n';
+        messages = messages + err + '\n';
       }
     });
   });
