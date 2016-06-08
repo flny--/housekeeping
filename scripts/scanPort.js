@@ -32,6 +32,11 @@ scanNext = function() {
   var port = configMap.ports.shift();
   if(port) {
     scanPortChain(port);
+  }else{
+    if(errMessages != '') {
+      console.log(errMessages);
+      logger.log(logger.categorySystemError, errMessages);
+    };
   }
 }
 
@@ -40,7 +45,3 @@ scanNext = function() {
 console.log(configMap.ports + ' checking...');
 scanNext();
 
-if(errMessages != '') {
-  console.log(errMessages);
-  logger.log(logger.categorySystemError, errMessages);
-};
