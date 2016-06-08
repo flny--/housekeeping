@@ -17,6 +17,8 @@ scanPorts
 
 
 scanPorts = function() {
+  console.log(configMap.ports + ' checking...');
+
   var messages = '';
   configMap.ports.forEach(function(port) {
     scanner.run(configMap.host, port, function(err, res) {
@@ -33,7 +35,4 @@ errMessages = scanPorts();
 if(errMessages == '') {
   console.log(errMessages);
   logger.log(logger.categorySystemError, errMessages);
-}else{
-  console.log(configMap.ports + ' are checked.');
-}
-
+};
