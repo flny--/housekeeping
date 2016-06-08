@@ -23,6 +23,7 @@ scanPorts = function() {
   configMap.ports.forEach(function(port) {
     scanner.run(configMap.host, port, function(err, res) {
       if(err && err.indexOf(configMap.udpErrorStr) == -1) {
+        console.log(err);
         messages += err + '\n';
       }
     });
@@ -32,7 +33,7 @@ scanPorts = function() {
 
 
 errMessages = scanPorts();
-if(errMessages == '') {
+if(errMessages != '') {
   console.log(errMessages);
   logger.log(logger.categorySystemError, errMessages);
 };
