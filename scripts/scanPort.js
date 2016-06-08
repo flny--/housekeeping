@@ -12,37 +12,33 @@ var configMap = {
   udpErrorStr : 'protocol \"udp\" with message',
   msgPath : '/mnt/pub/misc/monitor/'
 },
-errMessages,
-scanPorts,
-scanAPort
+errMessages = '',
+scanPortChain,
+scanNext
 ;
 
 
-scanAPort = function(port) {
+scanPortChain = function(port) {
   scanner.run(configMap.host, port, function(err, res) {
     if(err && err.indexOf(configMap.udpErrorStr) == -1) {
-      return err + '\n';
-    }else{
-      return '';
+      errMessages += err + '\n';
     }
+    scanNext();
   });
 }
 
-scanPorts = function() {
-  console.log(configMap.ports + ' checking...');
-  var messages = '';
-
-  for(var i=0; i<configMap.ports.length; i++)  {
-    messages += scanAPort(configMap.ports[i]);
+scanNext = function() {
+  var port = configMap.ports.shift();
+  if(port) {
+    scanPortChain(port);
   }
-
-  console.log(messages);
-  return messages;
-  
 }
 
 
-errMessages = scanPorts();
+
+console.log(configMap.ports + ' checking...');
+scanNext();
+
 if(errMessages != '') {
   console.log(errMessages);
   logger.log(logger.categorySystemError, errMessages);
