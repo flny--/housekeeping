@@ -12,24 +12,19 @@ var configMap = {
   msgPath : '/mnt/pub/misc/monitor/'
 },
 errMessages = '',
-scanPortChain,
 scanNext
 ;
 
 
-scanPortChain = function(port) {
-  scanner.run(configMap.host, port, function(err, res) {
-    if(err && err.indexOf(configMap.udpErrorStr) == -1) {
-      errMessages += err + '\n';
-    }
-    scanNext();
-  });
-}
-
 scanNext = function() {
   var port = configMap.ports.shift();
   if(port) {
-    scanPortChain(port);
+    scanner.run(configMap.host, port, function(err, res) {
+      if(err && err.indexOf(configMap.udpErrorStr) == -1) {
+        errMessages += err + '\n';
+      }
+      scanNext();
+    });
   }else{
     if(errMessages != '') {
       console.log(errMessages);
