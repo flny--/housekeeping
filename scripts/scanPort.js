@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 
 var scanner = require('node-netcat').portscan(),
-    logger = require('./logger'),
-    async  = require('async')
+    logger = require('./logger')
 ;
 
 
@@ -20,7 +19,6 @@ scanNext
 
 scanPortChain = function(port) {
   scanner.run(configMap.host, port, function(err, res) {
-    console.log(port + " scanned.");
     if(err && err.indexOf(configMap.udpErrorStr) == -1) {
       errMessages += err + '\n';
     }
