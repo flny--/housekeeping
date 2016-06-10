@@ -1,17 +1,18 @@
 #!/usr/bin/env node
 
-var fs = require("fs-extra")
+var fs = require("fs-extra"),
+    path = require("path")
 ;
 
 var configMap = {
     pathRoot: "/mnt/pub/misc/monitor/"
 },
 categoryMap = {
-    systemError: {value:100, prefix: "system_error_", icon: ""},
-    systemInfo : {value:101, prefix: "system_info_",  icon: ""},
+    systemError: {value:100, prefix: "system_error_", icon: ":fire:"},
+    systemInfo : {value:101, prefix: "system_info_",  icon: ":ok:"},
     appInfo    : {value:201, prefix: "app_info_",     icon: ""}
 },
-getFileName, getCategoryObj
+getFileName, getCategoryObjFromCategory, getCategoryObjFromFilepath
 ;
 
 
@@ -20,6 +21,10 @@ module.exports = {
         var filePath = getFileName(category);
         fs.appendFile(filePath, msg);
     },
+
+    parse: function(filePath) {
+        return getCategoryObjFromFilepath(filePath);
+    },
     
     categorySystemError: categoryMap.systemError.value,
     categorySystemInfo : categoryMap.systemInfo.value,
@@ -27,8 +32,21 @@ module.exports = {
 }
 
 
+getCategoryObjFromFilepath = function(filePath) {
+    var file = path.basename(filePath),
+        result = undefined;
+    
+    Object.keys(categoryMap).forEach(function(key) {
+        var aCategory = this[key];
+        if(file.startsWith(aCategory.prefix)) {
+            result = aCategory;
+        }
+    }, categoryMap);
+    return result;
+}
 
-getCategoryObj = function(category) {
+
+getCategoryObjFromCategory = function(category) {
     var result = undefined;
     Object.keys(categoryMap).forEach(function(key) {
         var aCategory = this[key];
@@ -42,7 +60,7 @@ getCategoryObj = function(category) {
 
 getFileName = function(category) {
     var epoch = (new Date()).getTime();
-    var categoryObj = getCategoryObj(category);
+    var categoryObj = getCategoryObjFromCategory(category);
 
     if(categoryObj) {
         return configMap.pathRoot + categoryObj.prefix + epoch;
