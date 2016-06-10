@@ -34,7 +34,7 @@ sendRecord = function(ip) {
         if(err) throw err;
         console.log(res);
         fs.writeFileSync(configMap.prevIpPath, ip, 'utf8');
-        logger.log(logger.categorySystemInfo, "DDNS Rec Changed.");
+        logger.log(logger.categorySystemInfo, "External Ip Changed.");
     });
     
 };
@@ -52,6 +52,7 @@ hasChangedIp = function(nowIp) {
 
 onReceiveIp = function(err, ip) {
     if(err) throw err;
+
     if(hasChangedIp(ip)) {
         sendRecord(ip)
     }
