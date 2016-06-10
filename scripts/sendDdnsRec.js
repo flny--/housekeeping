@@ -41,6 +41,10 @@ sendRecord = function(ip) {
 
 
 hasChangedIp = function(nowIp) {
+    if(!fs.accessSync(configMap.prevIpPath, fs.F_OK)) {
+        return true;
+    }
+    
     var prevIp = fs.readFileSync(configMap.prevIpPath, 'utf8');
     if(prevIp) {
         return prevIp != nowIp;
