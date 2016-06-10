@@ -61,6 +61,8 @@ onReceiveIp = function(err, ip) {
 
     if(hasChangedIp(ip)) {
         sendRecord(ip)
+    }else{
+        console.log("External Ip not changed.");
     }
 }
 
