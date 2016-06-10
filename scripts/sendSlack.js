@@ -10,7 +10,6 @@ var SlackNode = require('slack-node'),
 var configMap = {
   msgPath : "/mnt/pub/misc/monitor/",
   donePath : "/mnt/pub/misc/monitor/done/",
-  filePrefix : "system_port_"
 }
 ;
 
