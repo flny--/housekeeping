@@ -16,8 +16,9 @@ var configMap = {
 
 
 filterFile = function(file, stats) {
-    return stats.isDirectory() || 
-        !path.basename(file).toLowerCase().endsWith(".jpg");
+    return false;
+//    return stats.isDirectory() || 
+  //      !path.basename(file).toLowerCase().endsWith(".jpg");
 };
 
 
