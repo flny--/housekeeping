@@ -3,7 +3,7 @@
 var readdir = require("recursive-readdir"),
     path    = require("path"),
     fs      = require("fs-extra"),
-    exif    = require("exif2")
+    exif    = require("exif")
 ;
 
 var configMap = {
@@ -27,7 +27,7 @@ filterFile = function(file, stats) {
 sortOneFile = function(file) {
     exif(file, function(err, exifObj){
         if(err) throw err;
-        console.log(exifObj["date time original"]);
+        console.log(exifObj.exif.DateTimeOriginal);
     });
 };
 
