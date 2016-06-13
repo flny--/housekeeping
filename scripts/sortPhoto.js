@@ -3,7 +3,7 @@
 var readdir = require("recursive-readdir"),
     path    = require("path"),
     fs      = require("fs-extra"),
-    exif    = require("exif")
+    exif    = require("exif2")
 ;
 
 var configMap = {
