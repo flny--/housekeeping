@@ -25,16 +25,15 @@ filterFile = function(file, stats) {
 
 
 sortOneFile = function(file) {
-    console.log(file);
-/*    exif(file, function(err, exifObj){
+    exif(file, function(err, exifObj){
         if(err) throw err;
-        console.log(file + exifObj);
-    });*/
+        console.log(exifObj);
+    });
 };
 
 
 
-readdir(configMap.poolPath, ["*.3gp*"], function(err, files) {
+readdir(configMap.poolPath, ["*.3gp*", "*.mp4"], function(err, files) {
     if(err) throw err;
     files.forEach(sortOneFile);
 });
