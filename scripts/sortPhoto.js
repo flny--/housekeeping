@@ -34,7 +34,7 @@ sortOneFile = function(file) {
 
 
 
-readdir(configMap.poolPath, [".3gp"], function(err, files) {
+readdir(configMap.poolPath, ["*.3gp*"], function(err, files) {
     if(err) throw err;
     files.forEach(sortOneFile);
 });
