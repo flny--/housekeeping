@@ -16,11 +16,10 @@ var configMap = {
 
 
 filterFile = function(file, stats) {
-    return false;
-    if(stats.isDirectory()) {
-        return true;
-    }else if(path.basename(file).toLowerCase().endsWith(".jpg")) {
+    if(path.basename(file).toLowerCase().endsWith(".jpg")) {
         return false;
+    }else if(stats.isDirectory()) {
+        return true;
     }else{
         return true;
     }
