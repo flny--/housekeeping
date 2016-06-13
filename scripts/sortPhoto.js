@@ -16,17 +16,22 @@ var configMap = {
 
 
 filterFile = function(file, stats) {
-    return false;
-//    return stats.isDirectory() || 
-  //      !path.basename(file).toLowerCase().endsWith(".jpg");
+    if(stats.isDirectory()) {
+        return true;
+    }else if(path.basename(file).toLowerCase().endsWith(".jpg")) {
+        return false;
+    }else{
+        return true;
+    }
 };
 
 
 sortOneFile = function(file) {
-    exif(file, function(err, exifObj){
+    console.log(file);
+/*    exif(file, function(err, exifObj){
         if(err) throw err;
         console.log(file + exifObj);
-    });
+    });*/
 };
 
 
