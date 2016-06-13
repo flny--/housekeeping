@@ -27,7 +27,7 @@ filterFile = function(file, stats) {
 sortOneFile = function(file) {
     exif(file, function(err, exifObj){
         if(err) throw err;
-        console.log(new Date(exifObj.exif.DateTimeOriginal));
+        console.log(Date.parse(exifObj.exif.DateTimeOriginal));
     });
 };
 
