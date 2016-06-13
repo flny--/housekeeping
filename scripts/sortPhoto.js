@@ -18,8 +18,6 @@ var configMap = {
 filterFile = function(file, stats) {
     if(path.basename(file).toLowerCase().endsWith(".jpg")) {
         return false;
-    }else if(stats.isDirectory()) {
-        return true;
     }else{
         return true;
     }
