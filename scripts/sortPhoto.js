@@ -8,7 +8,7 @@ var readdir = require("recursive-readdir"),
 
 var configMap = {
         poolPath   : "/mnt/pub/image/photo/pool/",
-        targetPath : "/mnt/pub/image/photo/"
+        targetRoot : "/mnt/pub/image/photo/"
 
     },
     filterFile, sortOneFile
@@ -33,7 +33,9 @@ sortOneFile = function(file) {
         var tokens = String(exifObj.exif.DateTimeOriginal).replace(/ /g, ':').split(':');
         var year  = tokens[0],
             month = tokens[1];
-        console.log(year + month);
+        var targetPath = configMap.targetRoot + year + '/' + month;
+        console.log(targetPath);
+        fs.ensureDirSync(targetPath);
     });
 };
 
