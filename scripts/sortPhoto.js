@@ -40,7 +40,7 @@ sortOneFile = function(file) {
         fs.ensureDirSync(targetPath);
         
         var targetFile = targetPath + path.basename(file);
-        console.log(targetFile);
+        console.log(exifObj.exif);
         /*
         fs.rename(file, targetFile, function(err) {
             if(err) {
