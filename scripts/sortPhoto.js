@@ -39,7 +39,7 @@ sortOneFile = function(file) {
         var targetPath = configMap.targetRoot + year + '/' + month + '/';
         fs.ensureDirSync(targetPath);
         
-        var prefix = String(exifObj.image.Model).substr(0, 4);
+        var prefix = String(exifObj.image.Model).substr(0, 3) + '_';
         var targetFile = targetPath + prefix + path.basename(file);
         console.log(targetFile);
         /*
