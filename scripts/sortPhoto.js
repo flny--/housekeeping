@@ -29,7 +29,10 @@ sortOneFile = function(file) {
         return;
     }
     exif(file, function(err, exifObj){
-        if(err) throw err;
+        if(err) {
+            console.log(err);
+            return;
+        }
         var tokens = String(exifObj.exif.DateTimeOriginal).replace(/ /g, ':').split(':');
         var year  = tokens[0],
             month = tokens[1];
@@ -37,13 +40,17 @@ sortOneFile = function(file) {
         fs.ensureDirSync(targetPath);
         
         var targetFile = targetPath + path.basename(file);
+        console.log(targetFile);
+        /*
         fs.rename(file, targetFile, function(err) {
             if(err) {
+                console.log(err);
                 return;
             }else{
                 console.log(targetFile);
             }
         });
+        */
     });
 };
 
