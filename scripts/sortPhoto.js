@@ -33,9 +33,17 @@ sortOneFile = function(file) {
         var tokens = String(exifObj.exif.DateTimeOriginal).replace(/ /g, ':').split(':');
         var year  = tokens[0],
             month = tokens[1];
-        var targetPath = configMap.targetRoot + year + '/' + month;
-        console.log(targetPath);
+        var targetPath = configMap.targetRoot + year + '/' + month + '/';
         fs.ensureDirSync(targetPath);
+        
+        var targetFile = targetPath + path.basename(file);
+        fs.rename(file, targetFile, function(err) {
+            if(err) {
+                return;
+            }else{
+                console.log(targetFile);
+            }
+        });
     });
 };
 
