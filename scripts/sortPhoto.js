@@ -8,8 +8,8 @@ var readdir = require("recursive-readdir"),
 
 var configMap = {
         poolPath   : "/mnt/pub/image/photo/pool/",
-        targetRoot : "/mnt/pub/image/photo/"
-
+        targetRoot : "/mnt/pub/image/photo/",
+        donePath   : "/mnt/pub/misc/done/"
     },
     filterFile, sortOneFile
 ;

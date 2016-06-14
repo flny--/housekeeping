@@ -9,7 +9,7 @@ var SlackNode = require('slack-node'),
 
 var configMap = {
   msgPath : "/mnt/pub/misc/monitor/",
-  donePath : "/mnt/pub/misc/monitor/done/",
+  donePath : "/mnt/pub/misc/done/",
 }
 ;
 
