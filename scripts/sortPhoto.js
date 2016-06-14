@@ -41,8 +41,7 @@ sortOneFile = function(file) {
         
         var prefix = String(exifObj.image.Model).substr(0, 3) + '_';
         var targetFile = targetPath + prefix + path.basename(file);
-        console.log(targetFile);
-        
+
         fs.rename(file, targetFile, function(err) {
             if(err) {
                 console.log(err);
