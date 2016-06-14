@@ -28,7 +28,10 @@ sortOneFile = function(file) {
     exif(file, function(err, exifObj){
         if(err) throw err;
         var tokens = String(exifObj.exif.DateTimeOriginal).replace(/ /g, ':').split(':');
-        console.log(tokens);
+        var year  = tokens[0],
+            month = tokens[1],
+            date  = tokens[2];
+        console.log(year + month + date);
     });
 };
 
