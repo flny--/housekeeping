@@ -11,17 +11,8 @@ var configMap = {
         targetRoot : "/mnt/pub/image/photo/",
         donePath   : "/mnt/pub/misc/done/"
     },
-    filterFile, sortOneFile
+    sortOneFile
 ;
-
-
-filterFile = function(file, stats) {
-    if(path.basename(file).toLowerCase().endsWith(".jpg")) {
-        return false;
-    }else{
-        return true;
-    }
-};
 
 
 sortOneFile = function(file) {
