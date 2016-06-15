@@ -43,7 +43,7 @@ sortOneFile = function(file) {
                 console.log(targetFile);
             }
             fileCount--;
-            if(fileCount = 0 && sortedCount > 0) {
+            if(fileCount === 0 && sortedCount > 0) {
                 logger.log(logger.categoryappInfo, 
                     sortedCount + "枚の写真をアップロードしました");
             }
