@@ -25,7 +25,8 @@ sortOneFile = function(file) {
             fileCount--;
             return;
         }
-        var tokens = String(exifObj.exif.DateTimeOriginal).replace(/ /g, ':').split(':');
+        var tokens = 
+            String(exifObj.exif.DateTimeOriginal).replace(/ /g, ':').split(':');
         var year  = tokens[0],
             month = tokens[1];
         var targetPath = configMap.targetRoot + year + '/' + month + '/';
@@ -42,8 +43,9 @@ sortOneFile = function(file) {
                 console.log(targetFile);
             }
             fileCount--;
-            if(fileCount <= 0 && sortedCount > 0) {
-                logger.log(logger.categorySystemInfo, sortedCount + "枚の写真をアップロードしました");
+            if(fileCount = 0 && sortedCount > 0) {
+                logger.log(logger.categoryappInfo, 
+                    sortedCount + "枚の写真をアップロードしました");
             }
         });
         
