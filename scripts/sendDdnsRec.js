@@ -34,7 +34,8 @@ sendRecord = function(ip) {
         if(err) throw err;
         console.log(res);
         fs.writeFileSync(configMap.prevIpPath, ip, 'utf8');
-        logger.log(logger.categorySystemInfo, ip + " : External Ip Changed.");
+        logger.log(logger.categorySystemInfo,
+            ip + " : グローバルIPが変わりました");
     });
     
 };

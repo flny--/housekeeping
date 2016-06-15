@@ -45,7 +45,7 @@ sortOneFile = function(file) {
             fileCount--;
             if(fileCount === 0 && sortedCount > 0) {
                 logger.log(logger.categoryappInfo, 
-                    sortedCount + "枚の写真をアップロードしました");
+                    sortedCount + "枚の写真を登録しました");
             }
         });
         
