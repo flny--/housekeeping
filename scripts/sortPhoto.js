@@ -56,7 +56,7 @@ sortOneFile = function(file) {
             }
             fileCount--;
             if(fileCount === 0 && sortedCount > 0) {
-                logger.log(logger.categoryappInfo, 
+                logger.log(logger.categoryAppInfo, 
                     sortedCount + "枚の写真を登録しました");
             }
         });

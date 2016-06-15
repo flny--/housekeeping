@@ -28,7 +28,7 @@ module.exports = {
     
     categorySystemError: categoryMap.systemError.value,
     categorySystemInfo : categoryMap.systemInfo.value,
-    categoryappInfo    : categoryMap.appInfo.value,
+    categoryAppInfo    : categoryMap.appInfo.value,
 }
 
 
