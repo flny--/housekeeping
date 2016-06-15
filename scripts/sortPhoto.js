@@ -10,11 +10,15 @@ var readdir = require("recursive-readdir"),
 var configMap = {
         poolPath   : "/mnt/pub/image/photo/pool/",
         targetRoot : "/mnt/pub/image/photo/",
-        donePath   : "/mnt/pub/misc/done/"
+        donePath   : "/mnt/pub/misc/done/",
+        uid        : 1000,
+        gid        : 1000,
     },
     fileCount = 0, sortedCount = 0,
     sortOneFile
 ;
+
+
 
 
 sortOneFile = function(file) {
@@ -31,6 +35,9 @@ sortOneFile = function(file) {
             month = tokens[1];
         var targetPath = configMap.targetRoot + year + '/' + month + '/';
         fs.ensureDirSync(targetPath);
+        fs.chown(targetPath,configMap.uid, configMap.gid, function(err) {
+            if(err) console.log(err);
+        });
         
         var prefix = String(exifObj.image.Model).substr(0, 3) + '_';
         var targetFile = targetPath + prefix + path.basename(file);
