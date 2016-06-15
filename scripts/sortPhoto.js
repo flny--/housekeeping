@@ -15,9 +15,14 @@ var configMap = {
         gid        : 1000,
     },
     fileCount = 0, sortedCount = 0,
-    sortOneFile
+    sortOneFile, changeAuth;
 ;
 
+changeAuth = function(target) {
+    fs.chown(target, configMap.uid, configMap.gid, function(err) {
+        if(err) console.log(err);
+    });
+}
 
 
 
@@ -35,9 +40,8 @@ sortOneFile = function(file) {
             month = tokens[1];
         var targetPath = configMap.targetRoot + year + '/' + month + '/';
         fs.ensureDirSync(targetPath);
-        fs.chown(targetPath,configMap.uid, configMap.gid, function(err) {
-            if(err) console.log(err);
-        });
+        changeAuth(targetPath);
+
         
         var prefix = String(exifObj.image.Model).substr(0, 3) + '_';
         var targetFile = targetPath + prefix + path.basename(file);
@@ -47,6 +51,7 @@ sortOneFile = function(file) {
                 console.log(err);
             }else{
                 sortedCount++;
+                changeAuth(targetFile);
                 console.log(targetFile);
             }
             fileCount--;
