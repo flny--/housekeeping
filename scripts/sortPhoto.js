@@ -3,7 +3,8 @@
 var readdir = require("recursive-readdir"),
     path    = require("path"),
     fs      = require("fs-extra"),
-    exif    = require("exif")
+    exif    = require("exif"),
+    logger  = require("./logger")
 ;
 
 var configMap = {
@@ -11,17 +12,17 @@ var configMap = {
         targetRoot : "/mnt/pub/image/photo/",
         donePath   : "/mnt/pub/misc/done/"
     },
+    fileCount = 0, sortedCount = 0,
     sortOneFile
 ;
 
 
 sortOneFile = function(file) {
-    if(!path.basename(file).toLowerCase().endsWith(".jpg")) {
-        return;
-    }
+
     exif(file, function(err, exifObj){
         if(err) {
             console.log(err);
+            fileCount--;
             return;
         }
         var tokens = String(exifObj.exif.DateTimeOriginal).replace(/ /g, ':').split(':');
@@ -36,9 +37,13 @@ sortOneFile = function(file) {
         fs.rename(file, targetFile, function(err) {
             if(err) {
                 console.log(err);
-                return;
             }else{
+                sortedCount++;
                 console.log(targetFile);
+            }
+            fileCount--;
+            if(fileCount <= 0 && sortedCount > 0) {
+                logger.log(logger.categorySystemInfo, sortedCount + "枚の写真をアップロードしました");
             }
         });
         
@@ -49,5 +54,9 @@ sortOneFile = function(file) {
 
 readdir(configMap.poolPath, function(err, files) {
     if(err) throw err;
-    files.forEach(sortOneFile);
+    var filtered = files.filter(function(file) {
+        return path.basename(file).toLowerCase().endsWith(".jpg");
+    });
+    fileCount = filtered.length;
+    filtered.forEach(sortOneFile);
 });
