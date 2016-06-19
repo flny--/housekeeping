@@ -14,7 +14,7 @@ var configMap = {
         uid        : 1000,
         gid        : 1000,
     },
-    fileCount = 0, sortedCount = 0,
+    fileCount = 0, sortedCount = 0, dupedCount = 0,
     sortOneFile, changeAuth;
 ;
 
@@ -49,6 +49,9 @@ sortOneFile = function(file) {
         fs.rename(file, targetFile, function(err) {
             if(err) {
                 console.log(err);
+                if(fs.statSync(targetFile)) {
+                    dupedCount++;
+                }
             }else{
                 sortedCount++;
                 changeAuth(targetFile);
@@ -57,7 +60,10 @@ sortOneFile = function(file) {
             fileCount--;
             if(fileCount === 0 && sortedCount > 0) {
                 logger.log(logger.categoryAppInfo, 
-                    sortedCount + "枚の写真を登録しました");
+                    fileCount +   '枚の写真がアップロードされ、' +
+                    sortedCount + '枚が新規、' +
+                    dupedCount  + '枚が重複でした'
+                    );
             }
         });
         
