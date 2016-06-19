@@ -61,8 +61,8 @@ sortOneFile = function(file) {
             if(fileCount === 0 && sortedCount > 0) {
                 logger.log(logger.categoryAppInfo, 
                     fileCount +   '枚の写真がアップロードされ、' +
-                    sortedCount + '枚が新規、' +
-                    dupedCount  + '枚が重複でした'
+                    sortedCount + '枚を新規登録しました。' +
+                    '重複は' + dupedCount  + '枚でした。'
                     );
             }
         });
