@@ -58,10 +58,9 @@ sortOneFile = function(file) {
                 console.log(targetFile);
             }
             fileCount--;
-            if(fileCount === 0 && sortedCount > 0) {
+            if(fileCount === 0) {
                 logger.log(logger.categoryAppInfo, 
-                    fileCount +   '枚の写真がアップロードされ、' +
-                    sortedCount + '枚を新規登録しました。' +
+                    sortedCount + '枚の写真を新規登録しました。' +
                     '重複は' + dupedCount  + '枚でした。'
                     );
             }
