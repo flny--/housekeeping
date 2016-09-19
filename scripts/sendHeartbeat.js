@@ -19,25 +19,8 @@ awsConfig = {
   "region":          configMap.region
 },
 client = sqs.createClient(awsConfig),
-
-/*
-queue = sqs({
-  access: configMap.iam_key,
-  secret: configMap.iam_sec,
-  region: configMap.region
-}),*/
 send
 ;
-
-/*
-send = function() {
-  queue.push(configMap.qname, {
-    some: configMap.host + ' is alive.'
-  }, function() {
-    console.log('message sent.');
-  })
-}
-*/
 
 
 send = function() {
