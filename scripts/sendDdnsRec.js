@@ -17,7 +17,7 @@ var configMap = {
         {accessKeyId :     configMap.iam_key,
          secretAccessKey : configMap.iam_sec}
         ),
-    onReceiveIp, sendRecord, hasChangedIp;
+    onReceiveIp, sendRecord, hasChangedIp
 ;
 
 
@@ -31,7 +31,10 @@ sendRecord = function(ip) {
     };
     console.log(aRec);
     r53.setRecord(aRec, function(err, res) {
-        if(err) throw err;
+        if(err) {
+            console.error(err);
+            throw err;
+        }
         console.log(res);
         fs.writeFileSync(configMap.prevIpPath, ip, 'utf8');
         logger.log(logger.categorySystemInfo,
@@ -54,18 +57,21 @@ hasChangedIp = function(nowIp) {
     }else{
         return true;
     }
-}
+};
 
 
 onReceiveIp = function(err, ip) {
-    if(err) throw err;
+    if(err) {
+        console.error(err);
+        throw err;
+    }
 
     if(hasChangedIp(ip)) {
-        sendRecord(ip)
+        sendRecord(ip);
     }else{
         console.log("External Ip not changed.");
     }
-}
+};
 
 
 getIP(onReceiveIp);
